@@ -1,4 +1,50 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>https://samanyu6.github.io/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Mon, 28 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://samanyu6.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Creating a New Theme</title><link>https://samanyu6.github.io/posts/2020/12/creating-a-new-theme/</link><pubDate>Mon, 28 Dec 2020 00:00:00 +0000</pubDate><guid>https://samanyu6.github.io/posts/2020/12/creating-a-new-theme/</guid><description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>https://samanyu6.github.io/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://samanyu6.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Spring Boot 101</title><link>https://samanyu6.github.io/posts/2021/02/spring-boot-101/</link><pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate><guid>https://samanyu6.github.io/posts/2021/02/spring-boot-101/</guid><description>Introduction For those of you who don&amp;rsquo;t know what Spring Boot is, it is a framework to develop and build applications in Java. Several titans of the industry have adopted Spring Boot as their goto Java framework for developing their products, and that is because :
+(Very) Fast development Sets a lot of boilerplate code for you A set standard for Inversion of Control (Dependency Injection) and MVC Easy integrations, ORM, Internationalisation etc.</description><content type="html"><![CDATA[<h1 id="introduction">Introduction</h1>
+<p>For those of you who don&rsquo;t know what Spring Boot is, it is a framework to develop and build applications in Java. Several titans of the industry have adopted Spring Boot as their goto Java framework for developing their products, and that is because :</p>
+<ol>
+<li>(Very) Fast development</li>
+<li>Sets a <em>lot</em> of boilerplate code for you</li>
+<li>A set standard for Inversion of Control (Dependency Injection) and MVC</li>
+<li>Easy integrations, ORM, Internationalisation etc.</li>
+</ol>
+<h1 id="why-am-i-talking-about-this">Why am I talking about this?</h1>
+<p>For beginners, a lot of what Spring Boot does comes off as <em>magic</em>. Not only does it set up the boilerplate code, but it also does some of the programming logic for common operations - eg, all your CRUD and Getter, Setter Database functions can be done with a single line of code and that&rsquo;s one of the simpler automated setups.</p>
+<p>Essentially, learning Spring = learning the <em>magic</em> parts of Spring. Building applications without understanding the <em>magic</em> could lead to disasterous results (and also contribute to your Imposter Syndrome).</p>
+<p>The purpose of this post is to jot down all the <em>magic</em> portions and it&rsquo;s configs that I come across, to help me build my next Spring application the right way.</p>
+<p>PS: This isn&rsquo;t for absolute beginners. This is intended for those who are sort of familiar with the framework.</p>
+<h1 id="starting-a-spring-project">Starting a Spring Project</h1>
+<p>Spring comes with a list of starterpacks that we can choose from based on what features we require. Listing a few of the most used ones here:</p>
+<ol>
+<li>spring-boot-starter-web: Spring core, tomcat, mvc, jackson, logback</li>
+<li>spring-boot-starter-actuator: Healthcheck, monitoring and metric endpoint</li>
+</ol>
+<p>etc., i&rsquo;m not going to list all of them. I usually go without a starterpack and add my dependencies manually into pom.xml. <strong>If you&rsquo;re using submodules for multiple business logic code</strong>, we can set a universal pom.xml by setting:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">1. <span style="color:#f92672">&lt;packaging&gt;</span>pom<span style="color:#f92672">&lt;/packaging&gt;</span>     // Removes build target from src/ to the pom.xml
+
+2. <span style="color:#f92672">&lt;dependencyManagement&gt;</span> 
+    With all dependencies to be shared universally 
+   <span style="color:#f92672">&lt;/dependencyManagement&gt;</span>
+
+3. <span style="color:#f92672">&lt;pluginManagement&gt;</span> Maven plugins <span style="color:#f92672">&lt;/pluginManagement&gt;</span>
+</code></pre></div><h1 id="spring-beans">Spring Beans</h1>
+<p>Spring Beans are objects that are created, managed and used by the Spring IoC (Inversion of Control) container.</p>
+<p><strong>Inversion of Control?</strong>
+is a process of defining dependencies for a Class without actually creating them.</p>
+<p><strong>Why is this helpful?</strong>
+For instance, think of unit testing a function. You would have to instantiate <em>all</em> it&rsquo;s dependencies prior to starting the test process. Now, for small applications, this is manageable (still would be re-instantiating many of the dependencies) but for large applications this can be a nightmare. This is just one of the examples I can come up with, but it&rsquo;s always good practise to develop applications which are loosely coupled for flexibility.</p>
+<p><strong>How does IoC work?</strong>
+Instead of instantiating dependencies multiple times, create one IoC container, throw in <strong>all</strong> dependencies into it and call it wherever necessary!
+This is a super simple example, however there can be underlying complexities with this pattern.</p>
+<p>Beans are defined and thrown into this Spring IoC container and can be injected into anything that depends on this. Bean config and definitions are stored in an xml.</p>
+<p>Beans by default are defined as a <strong>Singleton</strong> (Only one object instantiated at a time). Because obviously, a single instance for the entire application means consistency. However we have many scopes for beans, where scopes define different definitions for a bean.</p>
+<h2 id="the-scopes">The Scopes:</h2>
+<ol>
+<li><strong>Singleton</strong> : Single bean definition per Spring IoC container.</li>
+<li><strong>Prototype</strong> : Single bean definition for multiple object instances.</li>
+<li><strong>Request</strong> : Single bean instance per HTTP request lifecycle. Each bean instance is created from a single bean definition.</li>
+<li><strong>Session</strong> : Single bean definition per HTTP session.</li>
+</ol>
+]]></content></item><item><title>Creating a New Theme</title><link>https://samanyu6.github.io/posts/2021/01/creating-a-new-theme/</link><pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate><guid>https://samanyu6.github.io/posts/2021/01/creating-a-new-theme/</guid><description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description><content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
 <p>This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.</p>
 <p>We&rsquo;ll start with creating a new site with a very basic template. Then we&rsquo;ll add in a few pages and posts. With small variations on that, you will be able to create many different types of web sites.</p>
