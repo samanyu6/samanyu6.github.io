@@ -1,4 +1,140 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Spring Boot 101</title><link>/posts/2021/02/spring-boot-101/</link><pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate><guid>/posts/2021/02/spring-boot-101/</guid><description>Introduction For those of you who don&amp;rsquo;t know what Spring Boot is, it is a framework to develop and build applications in Java. Several titans of the industry have adopted Spring Boot as their goto Java framework for developing their products, and that is because :
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Wed, 07 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elastic Search API's</title><link>/posts/2021/04/elastic-search-apis/</link><pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021/04/elastic-search-apis/</guid><description>Notes on Elastic Search Replace anything within &amp;ldquo;[[ ]]&amp;rdquo; with the appropriate values wrt to your configuration.
+API Endpoints : POST :
+POST -&amp;gt; localhost:9200/**[[index-name]]**/_doc/**[[unique-index-id]]** { &amp;#34;userId&amp;#34;: &amp;#34;1&amp;#34;, &amp;#34;id&amp;#34;: &amp;#34;1&amp;#34;, &amp;#34;createdAt&amp;#34;: &amp;#34;2020-01-03T23:00:50+0000&amp;#34;, &amp;#34;text&amp;#34;: &amp;#34;test multi word&amp;#34; } POST -&amp;gt; localhost:9200/**[[index-name]]**/_search { &amp;#34;query&amp;#34;: { &amp;#34;term&amp;#34;: { &amp;#34;text&amp;#34;: &amp;#34;word to search&amp;#34; } } } Uses exact matching and doesn't analyse the docs. Uses inverted indexing incase there are multiple words in text.</description><content type="html"><![CDATA[<h1 id="notes-on-elastic-search">Notes on Elastic Search</h1>
+<p>Replace anything within &ldquo;[[ ]]&rdquo; with the appropriate values wrt to your configuration.</p>
+<h3 id="api-endpoints-">API Endpoints :</h3>
+<!-- raw HTML omitted -->
+<ol>
+<li>
+<p>POST :</p>
+<ul>
+<li>
+<pre><code>  POST -&gt; localhost:9200/**[[index-name]]**/_doc/**[[unique-index-id]]**
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">  {
+      <span style="color:#f92672">&#34;userId&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>,
+      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>,
+      <span style="color:#f92672">&#34;createdAt&#34;</span>: <span style="color:#e6db74">&#34;2020-01-03T23:00:50+0000&#34;</span>,
+      <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;test multi word&#34;</span>
+  }
+</code></pre></div><!-- raw HTML omitted -->
+</li>
+<li>
+<pre><code>  POST -&gt; localhost:9200/**[[index-name]]**/_search
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">    {
+        <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;term&#34;</span>: {
+                <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;word to search&#34;</span>
+            }
+        }
+    }
+</code></pre></div><p><code>Uses exact matching and doesn't analyse the docs. Uses inverted indexing incase there are multiple words in text. Searching for &quot;word to search&quot; won't give an output even if the exact doc exists, cause of inverted indexing of individual words within. Instead use keyword to search for this.</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">     {
+        <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;term&#34;</span>: {
+                <span style="color:#f92672">&#34;text.keyword&#34;</span>: <span style="color:#e6db74">&#34;word to search&#34;</span>
+            }
+        }
+    }
+</code></pre></div><p><code>Searches for the exact term 'word to search' in the docs as opposed to what was happening in the query above. No analysing is done on the docs present.</code>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+</li>
+<li>
+<pre><code>  POST -&gt; localhost:9200/**[[index-name]]**/_search
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">    {
+        <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;match&#34;</span>: {
+                <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;text1 text2 text3&#34;</span>
+            }
+        }
+    }
+</code></pre></div><p><code>Returns all docs containing text1 or text2 or text3. All the docs analysed and used for querying matching words.</code></p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<pre><code>  POST -&gt; localhost:9200/**[[index-name]]**/_search
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">     {
+        <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;wildcard&#34;</span>: {
+                <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;te*&#34;</span>
+            }
+        }
+    }
+</code></pre></div><p><code>Wildcard entries for regex matching. Operation is slow considering it needs to scan through all docs.</code>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+</li>
+<li>
+<pre><code>  POST -&gt; localhost:9200/**[[index-name]]**/_search
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JSON" data-lang="JSON">    {
+       <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;query_string&#34;</span>: {
+                <span style="color:#f92672">&#34;query&#34;</span>: <span style="color:#e6db74">&#34;text:te*&#34;</span>
+            }
+        } 
+    }
+
+    <span style="color:#960050;background-color:#1e0010">------------------------------------------------------</span>
+
+    {
+       <span style="color:#f92672">&#34;query&#34;</span>: {
+            <span style="color:#f92672">&#34;bool&#34;</span>: {
+                <span style="color:#f92672">&#34;must or should&#34;</span>: [
+                    {
+                        <span style="color:#f92672">&#34;match&#34;</span> : {
+                            <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;test&#34;</span>
+                        }
+                    },
+                    {
+                        <span style="color:#f92672">&#34;match&#34;</span>: {
+                            <span style="color:#f92672">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;word&#34;</span>
+                        }
+                    }
+                ]
+            }
+        }  
+    }
+</code></pre></div><p><code>Analyses input, can use wildcard entries and can have multiple fields in query string to search.</code>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<code>must - returns docs which includes both matching strings.</code>  <br>
+<code>should - returns all docs which includes either matching strings</code>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+</li>
+</ul>
+</li>
+<li>
+<p>GET :</p>
+<ul>
+<li>
+<pre><code>  GET -&gt; localhost:9200/**[[index-name]]**/_search
+</code></pre><p><code>gets all data (upto 10k records - use scroll API to get more)</code>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+</li>
+<li>
+<pre><code>  GET -&gt; localhost:9200/**[[index-name]]**/_search?size=**[[number-of-records]**
+</code></pre></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<pre><code>  GET -&gt; localhost:9200/**[[index-name]]**/_search?q=id:**[[id-number]]**
+</code></pre></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<pre><code>  GET -&gt; localhost:9200/**[[index-name]]**/_search/q=text:**[[text-to-search]]**
+</code></pre></li>
+</ul>
+<!-- raw HTML omitted -->
+</li>
+</ol>
+]]></content></item><item><title>Spring Boot 101</title><link>/posts/2021/02/spring-boot-101/</link><pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate><guid>/posts/2021/02/spring-boot-101/</guid><description>Introduction For those of you who don&amp;rsquo;t know what Spring Boot is, it is a framework to develop and build applications in Java. Several titans of the industry have adopted Spring Boot as their goto Java framework for developing their products, and that is because :
 (Very) Fast development Sets a lot of boilerplate code for you A set standard for Inversion of Control (Dependency Injection) and MVC Easy integrations, ORM, Internationalisation etc.</description><content type="html"><![CDATA[<h1 id="introduction">Introduction</h1>
 <p>For those of you who don&rsquo;t know what Spring Boot is, it is a framework to develop and build applications in Java. Several titans of the industry have adopted Spring Boot as their goto Java framework for developing their products, and that is because :</p>
 <ol>
@@ -19,17 +155,18 @@
 <li>spring-boot-starter-actuator: Healthcheck, monitoring and metric endpoint</li>
 </ol>
 <p>etc., i&rsquo;m not going to list all of them. I usually go without a starterpack and add my dependencies manually into pom.xml. <strong>If you&rsquo;re using submodules for multiple business logic code</strong>, we can set a universal pom.xml by setting:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">1. <span style="color:#f92672">&lt;packaging&gt;</span>pom<span style="color:#f92672">&lt;/packaging&gt;</span>     // Removes build target from src/ to the pom.xml
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">1. <span style="color:#f92672">&lt;packaging&gt;</span>pom<span style="color:#f92672">&lt;/packaging&gt;</span>    
 
 2. <span style="color:#f92672">&lt;dependencyManagement&gt;</span> 
-    With all dependencies to be shared universally 
+    Universal dependency 
    <span style="color:#f92672">&lt;/dependencyManagement&gt;</span>
 
-3. <span style="color:#f92672">&lt;pluginManagement&gt;</span> Maven plugins <span style="color:#f92672">&lt;/pluginManagement&gt;</span>
+3. <span style="color:#f92672">&lt;pluginManagement&gt;</span> Maven plugins 
+  <span style="color:#f92672">&lt;/pluginManagement&gt;</span>
 </code></pre></div><h1 id="spring-beans">Spring Beans</h1>
 <p>Spring Beans are objects that are created, managed and used by the Spring IoC (Inversion of Control) container.</p>
 <p><strong>Inversion of Control?</strong>
-is a process of defining dependencies for a Class without actually creating them.</p>
+is a process of defining dependencies for a Class without actually creating them (the dependencies).</p>
 <p><strong>Why is this helpful?</strong>
 For instance, think of unit testing a function. You would have to instantiate <em>all</em> it&rsquo;s dependencies prior to starting the test process. Now, for small applications, this is manageable (still would be re-instantiating many of the dependencies) but for large applications this can be a nightmare. This is just one of the examples I can come up with. It&rsquo;s always a good practice to build features that are loosely coupled from one another, the flexibility it offers is worth it.</p>
 <p><strong>How does IoC work?</strong>
@@ -44,7 +181,6 @@ This is a super simple example, however there can be underlying complexities wit
 <li><strong>Request</strong> : Single bean instance per HTTP request lifecycle. Each bean instance is created from a single bean definition.</li>
 <li><strong>Session</strong> : Single bean definition per HTTP session.</li>
 </ol>
-<p>To be Continued.,</p>
 ]]></content></item><item><title>Creating a New Theme</title><link>/posts/2021/01/creating-a-new-theme/</link><pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate><guid>/posts/2021/01/creating-a-new-theme/</guid><description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description><content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
 <p>This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.</p>
