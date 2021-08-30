@@ -1,4 +1,40 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Wed, 07 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elastic Search API's</title><link>/posts/2021/04/elastic-search-apis/</link><pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021/04/elastic-search-apis/</guid><description>Notes on Elastic Search Replace anything within &amp;ldquo;[[ ]]&amp;rdquo; with the appropriate values wrt to your configuration.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Samanyu 👋</title><link>/posts/</link><description>Recent content in Posts on Samanyu 👋</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>My Notes for the Solutions Architect Certification</title><link>/posts/2021/04/my-notes-for-the-solutions-architect-certification/</link><pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021/04/my-notes-for-the-solutions-architect-certification/</guid><description>Introduction I began my solutions architect journey in late August. This blog post will serve as the notes I&amp;rsquo;ve taken as I&amp;rsquo;ve followed the course. Will be adding a lot of basics, for folks who are just getting into the world of cloud and infra. Would be ideal if this acts as a segue to someone&amp;rsquo;s cloud career, if not, a bunch of points for you (and me) to ace the Solutions Architect Exam.</description><content type="html"><![CDATA[<h1 id="introduction">Introduction</h1>
+<p>I began my solutions architect journey in late August. This blog post will serve as the notes I&rsquo;ve taken as I&rsquo;ve followed the course. Will be adding a lot of basics, for folks who are just getting into the world of cloud and infra. Would be ideal if this acts as a segue to someone&rsquo;s cloud career, if not, a bunch of points for you (and me) to ace the Solutions Architect Exam.
+<!-- raw HTML omitted --></p>
+<h1 id="content">Content</h1>
+<p>The cert focuses primarily on developing an intuition to designing systems on the cloud. By design, we intend to have the following points incorporated within :</p>
+<ul>
+<li>Resiliency</li>
+<li>High Performance</li>
+<li>Security</li>
+<li>Cost Optimisation</li>
+</ul>
+<p>Understanding the underlying systems and services (i.e., AWS and it&rsquo;s services) prior to this cert is a must! Ideally the Cloud Practitioner course gives you all the above info, or atleast the foundational building blocks on AWS and the general structure of cloud systems.</p>
+<p>The focus for this cert, topic wise, would be:</p>
+<ul>
+<li><a href="#compute-section">Compute</a></li>
+<li>Storage</li>
+<li>Networking</li>
+<li>DBaaS</li>
+<li>High Availability</li>
+<li>Architecture</li>
+<li>Security</li>
+<li>Management/ Compliance</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="what-is-compute">What is Compute?</h3>
+<p>Anything where you can run a set of computer instructions (in this case a processor, RAM etc). In this case we&rsquo;re talking about a Virtual Machine (VM) in AWS' compute servers.</p>
+<h3 id="what-types-of-compute-does-aws-offer">What types of compute does AWS Offer?</h3>
+<ul>
+<li>
+<p><strong>EC2</strong> : You&rsquo;ve probably heard of this. Basically a VM on one of AWS' giant compute server. Can safely choose this to deploy apps (small or medium sized) and this can be sanctioned for weeks/ months/ years.</p>
+</li>
+<li>
+<p><strong>Lambda</strong> : Another compute resource - but is generally used for executing <strong>functions</strong> only. This is compute you get for a couple of seconds/ minutes to execute a specific function and once that&rsquo;s done, give back the compute power to the server. This is kinda like triggers in databases, except in a distributed cloud env. Not a good idea to deploy fully fledged applications in this offering, works well with scripts.</p>
+</li>
+</ul>
+]]></content></item><item><title>Elastic Search API's</title><link>/posts/2021/04/elastic-search-apis/</link><pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate><guid>/posts/2021/04/elastic-search-apis/</guid><description>Notes on Elastic Search Replace anything within &amp;ldquo;[[ ]]&amp;rdquo; with the appropriate values wrt to your configuration.
 API Endpoints : POST :
 POST -&amp;gt; localhost:9200/**[[index-name]]**/_doc/**[[unique-index-id]]** { &amp;#34;userId&amp;#34;: &amp;#34;1&amp;#34;, &amp;#34;id&amp;#34;: &amp;#34;1&amp;#34;, &amp;#34;createdAt&amp;#34;: &amp;#34;2020-01-03T23:00:50+0000&amp;#34;, &amp;#34;text&amp;#34;: &amp;#34;test multi word&amp;#34; } POST -&amp;gt; localhost:9200/**[[index-name]]**/_search { &amp;#34;query&amp;#34;: { &amp;#34;term&amp;#34;: { &amp;#34;text&amp;#34;: &amp;#34;word to search&amp;#34; } } } Uses exact matching and doesn't analyse the docs. Uses inverted indexing incase there are multiple words in text.</description><content type="html"><![CDATA[<h1 id="notes-on-elastic-search">Notes on Elastic Search</h1>
 <p>Replace anything within &ldquo;[[ ]]&rdquo; with the appropriate values wrt to your configuration.</p>
